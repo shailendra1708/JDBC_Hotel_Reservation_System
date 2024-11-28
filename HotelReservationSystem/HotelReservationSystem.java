@@ -79,6 +79,7 @@ public class HotelReservationSystem {
 
     }
 
+    // reserveRoom Method
     private static void reserveRoom(Connection con, Scanner sc) {
         try {
             System.out.println("Enter guest name :");
@@ -105,3 +106,22 @@ public class HotelReservationSystem {
             e.printStackTrace();
         }
     }
+
+    // viewReservation Method
+    private static void viewReservation(Connection con) throws SQLException {
+        String query = "SELECT Reservation_id, Guest_nam, Room_number, Contact_number, Reservation_date FROM reservations";
+
+        try (Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(query)) {
+
+            while (rs.next()) {
+                System.out.print(rs.getInt("reservation_id") + "\t");
+                System.out.print(rs.getString("guest_name") + "\t");
+                System.out.print(rs.getInt("room_number") + "\t");
+                System.out.print(rs.getString("contact_number") + "\t");
+                System.out.println(); // Move to the next line
+            }
+        }
+    }
+
+
