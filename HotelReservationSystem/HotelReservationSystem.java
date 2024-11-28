@@ -17,7 +17,8 @@ public class HotelReservationSystem {
         Statement st =null;
         ResultSet rs =null;
 
-        try{
+        try
+        {
             // Driver Loaded
             Class.forName ("com.mysql.jdbc.Driver");
 
@@ -25,7 +26,7 @@ public class HotelReservationSystem {
             con = DriverManager.getConnection(url,username,password);
 
             // Creating Main Menu
-while(true){
+       while(true){
     System.out.println();
     System.out.println("HOTEL MANAGEMENT SYSTEM");
     Scanner sc = new Scanner(System.in);
@@ -37,8 +38,38 @@ while(true){
     System.out.println("0 Exit");
     System.out.println("Choose an option: ");
     int choice=sc.nextInt();
-}
-        }
+
+    switch (choice){
+        case 1 :
+            reserveRoom(con, sc);
+            break;
+
+        case 2 :
+            viewReservation(con);
+            break;
+
+        case 3 :
+            getRoomNumber(con,sc);
+            break;
+
+        case 4 :
+            updateReservation(con,sc);
+            break;
+
+        case 5 :
+             deleteReservation(con, sc);
+             break;
+
+        case 0 :
+            exit();
+            scanner.close();
+            return;
+
+        default :
+            System.out.println("Invalid choice. Try again.");
+    }
+
+      }
 
 
     }
