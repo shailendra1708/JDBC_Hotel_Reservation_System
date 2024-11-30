@@ -1,8 +1,4 @@
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Scanner;
 
 
@@ -120,6 +116,32 @@ public class HotelReservationSystem {
                 System.out.print(rs.getInt("room_number") + "\t");
                 System.out.print(rs.getString("contact_number") + "\t");
                 System.out.println(); // Move to the next line
+            }
+        }
+    }
+
+
+    // getRoomNumber Method
+    private static void getRoomNumber(Connection con, Scanner sc) {
+        try {
+            System.out.println("Enter reservation Id :");
+            int reservationId = sc.nextInt();
+            System.out.println("Enter guest name:");
+            String guestName = sc.next();
+
+            String query = "SELECT Room_number FROM reservations " + " WHERE Reservation_id = " + reservationId + " AND guestName = ' " + guestName + " is: Room_number ";
+
+            try (Statement st = con.createStatement();
+                 ResultSet rs = st.executeQuery(query)) {
+
+                if (rs.next()) {
+                    int RoomNumber = rs.getInt("Room_number");
+                    System.out.println("Room number for Reservation Id " + reservationId + " and Guest " + guestName + " is:" + RoomNumber);
+                } else {
+                    System.out.println("Reservation not found for the given Id and guest name. ");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }
