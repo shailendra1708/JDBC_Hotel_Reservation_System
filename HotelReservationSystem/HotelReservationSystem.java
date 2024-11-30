@@ -146,4 +146,42 @@ public class HotelReservationSystem {
         }
     }
 
+    private static void updateReservation(Connection con, Scanner sc) {
+        try {
+            System.out.print("Enter reservation Id to update ");
+            int reservationId = sc.nextInt();
+            sc.nextLine();
+
+            if (!reservationExists(con, reservationId)) {
+                System.out.println("Reservation not found for the given Id.");
+                return;
+            }
+
+            System.out.print("Enter new guest name: ");
+            String NewGuestName = sc.next();
+            System.out.print("Enter  new room number: ");
+            int NewRoomNumber = sc.nextInt();
+            System.out.print("Enter new contact number :");
+            String NewContactNumber = sc.next();
+
+            String query = "UPDATE reservations SET Guest_name = ' " + NewGuestName + "', " + " Room_number = " + NewRoomNumber + "," + " Contact_number = '" + NewContactNumber + "' " + " Reservation_id = " + reservationId;
+
+            try (Statement st = con.createStatement()) {
+                int i = st.executeUpdate(query);
+
+                if (i > 0) {
+                    System.out.println("Reservation update successfully! ");
+                } else {
+                    System.out.println("Reservation Failed! ");
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
+
 
